@@ -241,7 +241,7 @@ class CSS(BiGraph):
         population = [self.base_covering.copy() for i in xrange(self.population_size)]
 
         for i in range(self.max_steps):
-            print >> sys.stderr, "Generation", i
+            if not self.quiet: print >> sys.stderr, "Generation", i
             # copy the best covering in the previous generation
             nextgen = population[:self.elite]
             w, s = population[-1].cost, sum(c.cost for c in population)
@@ -257,7 +257,7 @@ class CSS(BiGraph):
             population = sorted(list(nextgen), key=lambda covering: covering.cost)
 
             best = population[0]
-            print >> sys.stderr, " best compression: ", best.cost
+            if not self.quiet: print >> sys.stderr, " best compression: ", best.cost
             count = 1
             if previous == best.cost:
                 count += 1
@@ -309,6 +309,7 @@ if __name__ == '__main__':
                         help='Level of gzip compression. Default no compression')
     parser.add_argument('-o', '--output', dest='out', type=str, default='',
                         help='output file name. If none, use STDOUT')
+    parser.add_argument('-q', '--quiet', action="store_true", default=False)
     parser.add_argument('fname', type=str, nargs='+', help='input file name')
 
     args = parser.parse_args()
@@ -319,6 +320,7 @@ if __name__ == '__main__':
             source += f.read()
 
     css = CSS(parse(source), args.gzip)
+    css.quiet = args.quiet
     res = css.compress()
     if args.out:
         with open(args.out, 'w') as f:
