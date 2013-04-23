@@ -1,0 +1,35 @@
+<!doctype html>
+<title>Genetic CSS Tester</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#url").keyup(function(event){
+            if(event.keyCode == 13){
+                var urlinput = document.getElementById('url');
+                postdata = {}
+                postdata.url = $("#url").val();
+                $.post("analyse", postdata, function(data) {
+                    $("#result").html(data);
+                });
+            };
+        });
+    });
+</script>
+
+<div class="page">
+
+    <h2>Genetic CSS Tester</h2>
+
+        <div class="urlinput">
+            
+            <input type="text" name="url" id="url">
+
+        </div>
+
+        <div id="result">
+        </div>
+
+</div>
+
