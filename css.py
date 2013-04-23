@@ -255,6 +255,7 @@ class CSS(BiGraph):
         previous = None
 
         population = [self.base_covering.copy() for i in xrange(self.population_size)]
+        count = 1
 
         for i in range(self.max_steps):
             if not self.quiet: print >> sys.stderr, "Generation", i
@@ -274,7 +275,7 @@ class CSS(BiGraph):
 
             best = population[0]
             if not self.quiet: print >> sys.stderr, " best compression: ", best.cost
-            count = 1
+ 
             if previous == best.cost:
                 count += 1
                 if count > self.constant_stop:
