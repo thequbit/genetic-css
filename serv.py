@@ -24,9 +24,12 @@ def analyse():
 
     res = analyse_url(url)
 
-    jsondata = json.dumps(res)
+    #jsondata = json.dumps(res)
 
-    print >> sys.stderr, jsondata
+    #print >> sys.stderr, jsondata
+
+    return "file can be compressed: {0} characters.".format(
+        res.cost)
 
     #return "hello."
 
